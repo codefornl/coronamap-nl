@@ -5,80 +5,26 @@
  * Questions: milo@codefor.nl
  * 
  */
-var maptype = "world"; // or "mapbox"
-
-/**
- * set gets filled after reading all the data_records. and is used to color the worldmap.
- * I intend to use a full ramp, but am working out how to do that.
- */
-var dataset = {};
 
 $(document).ready(function () {
-    var map = setMap(maptype);
+    var map = setMap();
+    mapboxMap(map);
     getData(map);
 
 });
 
-/**
- * Retrieve the geodata_records via AJAX call to local CSV file
- * @param {*} map 
- */
 function getData(map) {
-    $.ajax({
-        type: 'GET',
-        dataType: 'text',
-        /**
-         * The url should be replaced by a maintained source and may also be changed to a
-         * url that produces geojson which would mean this script would have to be
-         * rewritten slightly
-         */
-        //url: 'http://www.ralphstraumann.ch/projects/geohipster-map/user_geotable.csv',
-        url: './data/data_table.csv',
-        error: function () {
-            alert('Data loading didn\'t work, unfortunately.');
-        },
-        success: function (response) {
-            csv = readCSV(response);
-            //markers = new L.MarkerClusterGroup();
-            //markers.addLayer(csv);
-            //map.addLayer(markers);
-        },
-        complete: function () {
-            console.log('Data loading complete.');
-        }
+    $.getJSON('./data/covid_13_03.json', function (response) {
+        // Update the municipalities with the values from the json file.
+        worldMap(map);
     });
 }
 
-/**
- * Transform CSV file into Leaflet Layer
- * @param {*} csv 
- */
-function readCSV(csv) {
-    var data_records = L.geoCsv(null, {
-        onEachFeature: function (feature) {
-            dataset[feature.properties.municipality] = dataset[feature.properties.municipality] ? dataset[feature.properties.municipality] + 1 : 1;
-        },
-        // TODO needs to be changed to a function where the attribute is added to a municipality geometry
-        pointToLayer: function (feature, latlng) {
-            return L.marker(latlng);
-        },
-        firstLineTitles: true,
-        fieldSeparator: ';'
-    });
-    data_records.addData(csv);
-    console.log(dataset);
-    //if (maptype === "mapbox") {
-        mapboxMap(map);
-    //} else {
-        worldMap(map);
-    //}
-    return data_records;
-}
 
 /**
  * Initialize the map
  */
-function setMap(type) {
+function setMap() {
     // Set up the map
     map = new L.Map('map', {
         center: [52, 5],
