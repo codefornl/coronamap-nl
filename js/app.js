@@ -59,6 +59,12 @@ function mapboxMap(map) {
     }).addTo(map);
 }
 
+function formatDate(){
+    var temp = new Date("2020-03-13");
+    var mydate = temp.getDate().pad(2).toString() + '-' + (temp.getMonth()+1).pad(2).toString() + '-' + temp.getFullYear().toString()
+    console.log(mydate);
+    return mydate;
+}
 
 function getMatch(code, targetdata) {
     return targetdata.filter(function (data) {
@@ -100,7 +106,7 @@ function addTheme(map) {
     }
     function worldStyle(e) {
         return {
-            fillColor: getColor(e.properties[themeField]),
+            fillColor: getColor(e.properties[formatDate()]),
             weight: 1,
             opacity: 0.1,
             color: '#fff',
@@ -112,14 +118,13 @@ function addTheme(map) {
         $.getJSON('./data/covid_13_03.json', function (themedata) {
             // Update the municipalities with the values from the json file.
             for (var i = 0; i < mapdata.features.length; i++) {
-                var matchdata = getMatch("GM" + mapdata.features[i].properties.Code.pad(4), themedata)
+                var matchdata = getMatch(mapdata.features[i].properties.Code, themedata)
                 if(matchdata){
                     mapdata.features[i].properties = matchdata[0];
                 }
                 
                 //find the covid entry for this municipality and add it to the properties.
             }
-            console.log(mapdata);
             themeLayer = L.geoJSON(mapdata, { style: worldStyle, onEachFeature: onEachFeature }).addTo(map);
         });
 
