@@ -5,38 +5,46 @@
  * Questions: milo@codefor.nl
  * 
  */
-
 $(document).ready(function () {
     var map = setMap();
     mapboxMap(map);
-    getData(map);
-
+    addTheme(map);
 });
 
-function getData(map) {
-    $.getJSON('./data/covid_13_03.json', function (response) {
-        // Update the municipalities with the values from the json file.
-        worldMap(map);
-    });
+Number.prototype.pad = function (size) {
+    var s = String(this);
+    while (s.length < (size || 2)) { s = "0" + s; }
+    return s;
 }
 
 
+var themeLayer;
+var themeField = "COVID 13-03";
 /**
  * Initialize the map
  */
 function setMap() {
-    // Set up the map
-    map = new L.Map('map', {
+    return new L.Map('map', {
         center: [52, 5],
         zoom: 8,
         minZoom: 2,
         maxZoom: 18,
         zoomControl: false
     });
-
-    return map;
 }
 
+
+// get color depending on population density value
+function getColor(d) {
+    return d > 50 ? '#800026' :
+            d > 40  ? '#BD0026' :
+            d > 30 ? '#E31A1C' :
+            d > 20  ? '#FC4E2A' :
+            d > 10   ? '#FD8D3C' :
+            d > 5   ? '#FEB24C' :
+            d > 1   ? '#FED976' :
+                        '#FFEDA0';
+}
 /**
  * Load Mapbox base layer
  * @param {*} map 
@@ -51,7 +59,14 @@ function mapboxMap(map) {
     }).addTo(map);
 }
 
-function worldMap(map, max = 100) {
+
+function getMatch(code, targetdata) {
+    return targetdata.filter(function (data) {
+        return data.GemeentecodeGM == code;
+    })
+}
+
+function addTheme(map) {
 
     function zoomToFeature(e) {
         var layer = e.target;
@@ -60,14 +75,13 @@ function worldMap(map, max = 100) {
 
     function resetHighlight(e) {
         var layer = e.target;
-        worldLayer.resetStyle(layer);
+        themeLayer.resetStyle(layer);
     }
 
     function highlightFeature(e) {
         var layer = e.target;
         layer.setStyle({
-            color: '#f00',
-            fillColor: '#0f0',
+            //fillColor: getColor(layer),
             fillOpacity: .5
         });
 
@@ -84,18 +98,33 @@ function worldMap(map, max = 100) {
             click: zoomToFeature
         });
     }
-    function worldStyle() {
+    function worldStyle(e) {
         return {
-            fillColor: '#ccc',
+            fillColor: getColor(e.properties[themeField]),
             weight: 1,
-            opacity: 1,
-            color: '#7d7b6d',
+            opacity: 0.1,
+            color: '#fff',
             fillOpacity: .2
         };
     };
 
-    $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (response) {
-        worldLayer = L.geoJSON(response, { style: worldStyle, onEachFeature: onEachFeature }).addTo(map);
+    $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
+        $.getJSON('./data/covid_13_03.json', function (themedata) {
+            // Update the municipalities with the values from the json file.
+            for (var i = 0; i < mapdata.features.length; i++) {
+                var matchdata = getMatch("GM" + mapdata.features[i].properties.Code.pad(4), themedata)
+                if(matchdata){
+                    mapdata.features[i].properties = matchdata[0];
+                }
+                
+                //find the covid entry for this municipality and add it to the properties.
+            }
+            console.log(mapdata);
+            themeLayer = L.geoJSON(mapdata, { style: worldStyle, onEachFeature: onEachFeature }).addTo(map);
+        });
+
+
+
     });
 
 }
