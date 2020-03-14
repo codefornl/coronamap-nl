@@ -3,13 +3,8 @@
 
 <head>
 
-    <!--
-            Map of GeoHipster Sightings from around the world.
-         -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--CSS references -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
@@ -18,19 +13,18 @@
 </head>
 
 <body>
-
     <div id="controls">
         <style>
             #controls {
-              position: absolute;
-              width: 200px;
-              height: 200px;
-              background: white;
-              z-index: 1001;
-              margin: 10px;
-              padding: 10px;
-              font-family: Arial;
-              opacity: 0.9;
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background: white;
+                z-index: 1001;
+                margin: 10px;
+                padding: 10px;
+                font-family: Arial;
+                opacity: 0.9;
             }
         </style>
         <select id="datum-select">
@@ -53,7 +47,8 @@
         </select>
         <div id="info"></div>
         <div>
-          <a href="https://github.com/codefornl/coronamap-nl" style="font-size: 10px">https://github.com/codefornl/coronamap-nl</a>
+            <a href="https://github.com/codefornl/coronamap-nl"
+                style="font-size: 10px">https://github.com/codefornl/coronamap-nl</a>
         </div>
     </div>
 
