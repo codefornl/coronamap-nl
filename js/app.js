@@ -1,14 +1,18 @@
 /**
  * JavaScript to produce a map of csv data
- * 
+ *
  * freely based on from (c) Ralph Straumann, www.ralphstraumann.ch, 2014
  * Questions: milo@codefor.nl
- * 
+ *
  */
 $(document).ready(function () {
     var map = setMap();
     mapboxMap(map);
     addTheme(map);
+    $('#datum-select').change(function () {
+      map.removeLayer(themeLayer);
+      addTheme(map);
+    });
 });
 
 Number.prototype.pad = function (size) {
@@ -37,17 +41,17 @@ function setMap() {
 // get color depending on population density value
 function getColor(d) {
     return d > 50 ? '#800026' :
-            d > 40  ? '#BD0026' :
-            d > 30 ? '#E31A1C' :
-            d > 20  ? '#FC4E2A' :
-            d > 10   ? '#FD8D3C' :
-            d > 5   ? '#FEB24C' :
-            d > 1   ? '#FED976' :
-                        '#FFEDA0';
+           d > 40 ? '#BD0026' :
+           d > 30 ? '#E31A1C' :
+           d > 20 ? '#FC4E2A' :
+           d > 10 ? '#FD8D3C' :
+           d > 5  ? '#FEB24C' :
+           d > 1  ? '#FED976' :
+                    '#FFEDA0' ;
 }
 /**
  * Load Mapbox base layer
- * @param {*} map 
+ * @param {*} map
  */
 function mapboxMap(map) {
     var mapbox_token = 'pk.eyJ1IjoibWlibG9uIiwiYSI6ImNrMGtvajhwaDBsdHQzbm16cGtkcHZlaXUifQ.dJTOE8FJc801TAT0yUhn3g';
@@ -62,14 +66,7 @@ function mapboxMap(map) {
 function formatDate(){
     var temp = new Date("2020-03-13");
     var mydate = temp.getDate().pad(2).toString() + '-' + (temp.getMonth()+1).pad(2).toString() + '-' + temp.getFullYear().toString()
-    console.log(mydate);
     return mydate;
-}
-
-function getMatch(code, targetdata) {
-    return targetdata.filter(function (data) {
-        return data.GemeentecodeGM == code;
-    })
 }
 
 function addTheme(map) {
@@ -94,7 +91,6 @@ function addTheme(map) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-
     }
 
     function onEachFeature(feature, layer) {
@@ -104,32 +100,57 @@ function addTheme(map) {
             click: zoomToFeature
         });
     }
+
     function worldStyle(e) {
+        var value =
+          // 50 * (
+          //   e.properties.besmettingen[$('#datum-select').val()].toename /
+          e.properties.besmettingen[$('#datum-select').val()].aantal
+          // )
+        ;
         return {
-            fillColor: getColor(e.properties[formatDate()]),
+            fillColor: getColor(value),
             weight: 1,
             opacity: 0.1,
             color: '#fff',
-            fillOpacity: .2
+            fillOpacity: .8
         };
     };
 
+    function reindexBesmettingen(data) {
+      var dates = [];
+      for (var i in data) {
+        if (i.match(/[0-9]{2}\-[0-9]{2}\-[0-9]{4}/)) {
+          dates.push({
+            "datum": i,
+            "aantal": data[i]
+          });
+          delete(data[i]);
+        }
+      }
+      dates[0].toename = dates[0].aantal;
+      for (var i = 1; dates[i]; i++) {
+        dates[i].toename = dates[i].aantal - dates[i-1].aantal;
+      }
+      for (var i in dates) {
+        dates[dates[i].datum] = dates[i];
+        delete(dates[i]);
+      }
+      return dates;
+    }
+
     $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
         $.getJSON('./data/covid_13_03.json', function (themedata) {
-            // Update the municipalities with the values from the json file.
-            for (var i = 0; i < mapdata.features.length; i++) {
-                var matchdata = getMatch(mapdata.features[i].properties.Code, themedata)
-                if(matchdata){
-                    mapdata.features[i].properties = matchdata[0];
-                }
-                
-                //find the covid entry for this municipality and add it to the properties.
-            }
+            var besmettingsData = []; // indexed map for quick lookup
+            $(themedata).each(function (i, data) {
+              data["besmettingen"] = reindexBesmettingen(data);
+              besmettingsData[data.GemeentecodeGM] = data;
+            });
+            $(mapdata.features).each(function (i, feature) {
+              feature.properties = besmettingsData[feature.properties.Code];
+            });
             themeLayer = L.geoJSON(mapdata, { style: worldStyle, onEachFeature: onEachFeature }).addTo(map);
         });
-
-
-
     });
 
 }
