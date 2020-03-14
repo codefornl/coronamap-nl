@@ -41,14 +41,14 @@ function setMap() {
 
 // get color depending on population density value
 function getColor(d) {
-    return d > 50 ? '#800026' :
-           d > 40 ? '#BD0026' :
-           d > 30 ? '#E31A1C' :
-           d > 20 ? '#FC4E2A' :
-           d > 10 ? '#FD8D3C' :
-           d > 5  ? '#FEB24C' :
-           d > 1  ? '#FED976' :
-                    '#FFEDA0' ;
+    return d > 4096 ? '#800026' :
+           d > 1024 ? '#BD0026' :
+           d > 256  ? '#E31A1C' :
+           d > 64   ? '#FC4E2A' :
+           d > 16   ? '#FD8D3C' :
+           d > 4    ? '#FEB24C' :
+           d > 1    ? '#FED976' :
+                      '#FFEDA0' ;
 }
 /**
  * Load Mapbox base layer
@@ -110,13 +110,17 @@ function addTheme(map) {
           e.properties.besmettingen[$('#datum-select').val()].aantal
           // )
         ;
-        return {
-            fillColor: getColor(value),
+        var data = {
             weight: 1,
             opacity: 0.1,
-            color: '#fff',
-            fillOpacity: .8
+            color: '#555',
+            fillOpacity: 0
         };
+        if (value) {
+          data.fillColor = getColor(value);
+          data.fillOpacity = 0.5;
+        }
+        return data;
     };
 
     function reindexBesmettingen(data) {
