@@ -2,6 +2,7 @@
  * JavaScript to produce a map of csv data
  *
  * freely based on from (c) Ralph Straumann, www.ralphstraumann.ch, 2014
+ * also see: https://leafletjs.com/examples/choropleth/
  * Questions: milo@codefor.nl
  *
  */
@@ -11,7 +12,7 @@ $(document).ready(function () {
     addTheme(map);
     $('#datum-select').change(function () {
       map.removeLayer(themeLayer);
-      addTheme(map);
+      addTheme(map); // fixme: doesn't need to reload the data
     });
 });
 
@@ -85,7 +86,8 @@ function addTheme(map) {
         var layer = e.target;
         layer.setStyle({
             //fillColor: getColor(layer),
-            fillOpacity: .5
+            fillOpacity: .5,
+            name: 'test'
         });
 
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -149,7 +151,10 @@ function addTheme(map) {
             $(mapdata.features).each(function (i, feature) {
               feature.properties = besmettingsData[feature.properties.Code];
             });
-            themeLayer = L.geoJSON(mapdata, { style: worldStyle, onEachFeature: onEachFeature }).addTo(map);
+            themeLayer = L.geoJSON(mapdata, {
+              style: worldStyle,
+              onEachFeature: onEachFeature
+            }).addTo(map);
         });
     });
 

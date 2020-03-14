@@ -18,24 +18,44 @@
 </head>
 
 <body>
-  <select style="position: absolute; z-index: 1001" id="datum-select">
-    <option>27-02-2020</option>
-    <option>28-02-2020</option>
-    <option>29-02-2020</option>
-    <option>01-03-2020</option>
-    <option>02-03-2020</option>
-    <option>03-03-2020</option>
-    <option>04-03-2020</option>
-    <option>05-03-2020</option>
-    <option>06-03-2020</option>
-    <option>07-03-2020</option>
-    <option>08-03-2020</option>
-    <option>09-03-2020</option>
-    <option>10-03-2020</option>
-    <option>11-03-2020</option>
-    <option>12-03-2020</option>
-    <option selected=selected>13-03-2020</option>
-  </select>
+
+    <div id="controls">
+        <style>
+            #controls {
+              position: absolute;
+              width: 200px;
+              height: 200px;
+              background: white;
+              z-index: 1001;
+              margin: 10px;
+              padding: 10px;
+              font-family: Arial;
+              opacity: 0.9;
+            }
+        </style>
+        <select id="datum-select">
+            <option>27-02-2020</option>
+            <option>28-02-2020</option>
+            <option>29-02-2020</option>
+            <option>01-03-2020</option>
+            <option>02-03-2020</option>
+            <option>03-03-2020</option>
+            <option>04-03-2020</option>
+            <option>05-03-2020</option>
+            <option>06-03-2020</option>
+            <option>07-03-2020</option>
+            <option>08-03-2020</option>
+            <option>09-03-2020</option>
+            <option>10-03-2020</option>
+            <option>11-03-2020</option>
+            <option>12-03-2020</option>
+            <option selected=selected>13-03-2020</option>
+        </select>
+        <div id="info"></div>
+        <div>
+          <a href="https://github.com/codefornl/coronamap-nl" style="font-size: 10px">https://github.com/codefornl/coronamap-nl</a>
+        </div>
+    </div>
 
     <div id="map"></div>
 
