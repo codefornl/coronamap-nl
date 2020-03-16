@@ -102,7 +102,7 @@ function addTheme(map) {
       mouseout: resetHighlight,
       click: zoomToFeature
     });
-    var aantal = feature.properties.besmettingen[$('#datum-select').val()].aantal;
+    var aantal = feature.properties.besmettingen['COVID ' + $('#datum-select').val()].aantal;
     if(aantal > 0) {
       L.marker(layer.getBounds().getCenter(), {
         icon: L.divIcon({
@@ -117,7 +117,7 @@ function addTheme(map) {
     var value =
       // 50 * (
       //   e.properties.besmettingen[$('#datum-select').val()].toename /
-      e.properties.besmettingen[$('#datum-select').val()].aantal
+      e.properties.besmettingen['COVID ' + $('#datum-select').val()].aantal
       // )
       ;
     var data = {
@@ -136,7 +136,7 @@ function addTheme(map) {
   function reindexBesmettingen(data) {
     var dates = [];
     for (var i in data) {
-      if (i.match(/[0-9]{2}\-[0-9]{2}\-[0-9]{4}/)) {
+      if (i.match(/COVID [0-9]{2}\-[0-9]{2}/)) {
         dates.push({
           "datum": i,
           "aantal": data[i]
@@ -156,11 +156,11 @@ function addTheme(map) {
   }
 
   $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
-    $.getJSON('./data/covid_13_03.json', function (themedata) {
+    $.getJSON('./data/covid_15_03.json', function (themedata) {
       var besmettingsData = []; // indexed map for quick lookup
       $(themedata).each(function (i, data) {
         data["besmettingen"] = reindexBesmettingen(data);
-        besmettingsData[data.GemeentecodeGM] = data;
+        besmettingsData[data.GemeentecodeGM.replace(/GM0*/, '')] = data;
       });
       $(mapdata.features).each(function (i, feature) {
         feature.properties = besmettingsData[feature.properties.Code];
