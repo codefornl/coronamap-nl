@@ -114,6 +114,7 @@ function addTheme(map) {
   }
 
   function worldStyle(e) {
+    console.log(e);
     var value =
       // 50 * (
       //   e.properties.besmettingen[$('#datum-select').val()].toename /
