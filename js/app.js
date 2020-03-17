@@ -157,7 +157,7 @@ function addTheme(map) {
   }
 
   $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
-    $.getJSON('./data/covid_17_03.json', function (themedata) {
+    $.getJSON('./data/covid_16_03.json', function (themedata) {
       var besmettingsData = []; // indexed map for quick lookup
       $(themedata).each(function (i, data) {
         data["besmettingen"] = reindexBesmettingen(data);
