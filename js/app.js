@@ -24,6 +24,7 @@ Number.prototype.pad = function (size) {
 }
 
 var labelLayer = L.layerGroup();
+var regionsLayer;
 var themeLayer;
 var themeField = "COVID 13-03";
 /**
@@ -86,9 +87,8 @@ function addTheme(map) {
   function highlightFeature(e) {
     var layer = e.target;
     layer.setStyle({
-      //fillColor: getColor(layer),
-      fillOpacity: .5,
-      name: 'test'
+      weight: 2,
+      opacity: 1
     });
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -96,7 +96,7 @@ function addTheme(map) {
     }
   }
 
-  function onEachFeature(feature, layer) {
+  function onEachThemeFeature(feature, layer) {
     layer.on({
       mouseover: highlightFeature,
       mouseout: resetHighlight,
@@ -113,14 +113,19 @@ function addTheme(map) {
     }
   }
 
-  function worldStyle(e) {
-    console.log(e);
+  function regionStyle() {
+    var data = {
+      weight: 2,
+      opacity: 1,
+      color: '#f00',
+      fillOpacity: 0
+    };
+    return data;
+  };
+
+  function themeStyle(e) {
     var value =
-      // 50 * (
-      //   e.properties.besmettingen[$('#datum-select').val()].toename /
-      e.properties.besmettingen['COVID ' + $('#datum-select').val()].aantal
-      // )
-      ;
+      e.properties.besmettingen['COVID ' + $('#datum-select').val()].aantal;
     var data = {
       weight: 1,
       opacity: 0.1,
@@ -157,20 +162,28 @@ function addTheme(map) {
   }
 
   $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
-    $.getJSON('./data/covid_16_03.json', function (themedata) {
-      var besmettingsData = []; // indexed map for quick lookup
-      $(themedata).each(function (i, data) {
-        data["besmettingen"] = reindexBesmettingen(data);
-        besmettingsData[data.GemeentecodeGM.replace(/GM0*/, '')] = data;
+    $.getJSON('./data/veiligheidsregios_simplified.geojson', function (regions) {
+      $.getJSON('./data/covid_16_03.json', function (themedata) {
+        var besmettingsData = []; // indexed map for quick lookup
+        $(themedata).each(function (i, data) {
+          data["besmettingen"] = reindexBesmettingen(data);
+          besmettingsData[data.GemeentecodeGM.replace(/GM0*/, '')] = data;
+        });
+        $(mapdata.features).each(function (i, feature) {
+          feature.properties = besmettingsData[feature.properties.Code];
+        });
+
+        regionsLayer = L.geoJSON(regions, {
+          style: regionStyle
+        }).addTo(map);
+        
+        themeLayer = L.geoJSON(mapdata, {
+          style: themeStyle,
+          onEachFeature: onEachThemeFeature
+        }).addTo(map);
+
+        labelLayer.addTo(map);
       });
-      $(mapdata.features).each(function (i, feature) {
-        feature.properties = besmettingsData[feature.properties.Code];
-      });
-      themeLayer = L.geoJSON(mapdata, {
-        style: worldStyle,
-        onEachFeature: onEachFeature
-      }).addTo(map);
-      labelLayer.addTo(map);
     });
   });
 

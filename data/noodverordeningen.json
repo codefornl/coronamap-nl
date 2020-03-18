@@ -1,0 +1,145 @@
+[
+    {
+        "TDN_CODE": 2,
+        "name": "Fryslân",
+        "url": "https://www.veiligheidsregiofryslan.nl/intern/coronavirus-vrf/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 1,
+        "name": "Groningen",
+        "url": "https://www.veiligheidsregiogroningen.nl/over_ons/nieuws/wat_betekent_het_coronavirus_voor_groningen_/"
+    },
+    {
+        "TDN_CODE": 3,
+        "name": "Drenthe",
+        "url": "https://www.vrd.nl/index.php?id=1230",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 4,
+        "name": "IJsselland",
+        "url": "https://www.vrijsselland.nl/coronavirus/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 5,
+        "name": "Twente",
+        "url": "https://vrtwente.nl/corona/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 25,
+        "name": "Flevoland",
+        "url": "https://www.veiligheidsregioflevoland.nl/actueel/nieuws/@1718/nieuwe/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 10,
+        "name": "Noord-Holland-Noord",
+        "url": "https://www.vrnhn.nl/actueel/2020-03-16-bekendmaking-noodverordening-covid-19-veiligheidsregio-noord-holland-noord",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 11,
+        "name": "Zaanstreek-Waterland",
+        "url": "https://www.veiligheidsregiozaanstreekwaterland.nl/nieuws/nieuwsbericht/news/statement-burgemeesters-veiligheidsregio-zaanstreek-waterland.html",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 6,
+        "name": "Noord- en Oost-Gelderland",
+        "url": "https://www.vnog.nl/actueel/nieuws/2148-coronavirus",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 7,
+        "name": "Gelderland Midden",
+        "url": "https://www.vggm.nl/vggm/nieuwsarchief/update__noodverordening_en_handhaving",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 12,
+        "name": "Kennemerland",
+        "url": "https://www.vrk.nl/nl-NL/Coronavirus"
+    },
+    {
+        "TDN_CODE": 13,
+        "name": "Amsterdam-Amstelland"
+    },
+    {
+        "TDN_CODE": 14,
+        "name": "Gooi en Vechtstreek",
+        "url": "https://www.vrgooienvechtstreek.nl/actueel/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 9,
+        "name": "Utrecht",
+        "url": "https://www.vru.nl/coronavirus"
+    },
+    {
+        "TDN_CODE": 15,
+        "name": "Haaglanden",
+        "url": "https://www.vrh.nl/nieuws/noodverordening-nu-breder-van-kracht",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 17,
+        "name": "Rotterdam-Rijnmond",
+        "url": "https://vr-rr.nl/actueel/@56697/aanwijzingsbesluit/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 16,
+        "name": "Hollands Midden",
+        "url": "https://www.vrhm.nl/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 18,
+        "name": "Zuid-Holland-Zuid",
+        "url": "https://www.zhzveilig.nl/algemeen/noodverordening-coronavirus/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 19,
+        "name": "Zeeland",
+        "url": "https://www.zeelandveilig.nl/coronavirus",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 8,
+        "name": "Gelderland-Zuid",
+        "url": "https://www.crisisglz.nl/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 21,
+        "name": "Brabant-Noord",
+        "url": "https://www.vrbn.nl/update-coronavirus/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 22,
+        "name": "Brabant-Zuidoost"
+    },
+    {
+        "TDN_CODE": 23,
+        "name": "Limburg-Noord",
+        "url": "https://www.vrln.nl/coronavirus-waar-vind-je-informatie"
+    },
+    {
+        "TDN_CODE": 24,
+        "name": "Zuid-Limburg",
+        "url": "https://vrzl.nl/calamiteit/",
+        "noodverordening": true
+    },
+    {
+        "TDN_CODE": 20,
+        "name": "Midden- en West-Brabant",
+        "url": "https://www.vrmwb.nl/Nieuws/2020/02/27/Patient-met-Coronavirus-in-Tilburg",
+        "noodverordening": true
+
+    }
+]
