@@ -76,7 +76,8 @@
     {
         "TDN_CODE": 9,
         "name": "Utrecht",
-        "url": "https://www.vru.nl/coronavirus"
+        "url": "https://www.vru.nl/coronavirus",
+        "noodverordening": true
     },
     {
         "TDN_CODE": 15,
