@@ -163,7 +163,7 @@ function addTheme(map) {
 
   $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
     $.getJSON('./data/veiligheidsregios_simplified.geojson', function (regions) {
-      $.getJSON('./data/covid_16_03.json', function (themedata) {
+      $.getJSON('./data/covid_19_03.json', function (themedata) {
         var besmettingsData = []; // indexed map for quick lookup
         $(themedata).each(function (i, data) {
           data["besmettingen"] = reindexBesmettingen(data);
@@ -176,7 +176,7 @@ function addTheme(map) {
         regionsLayer = L.geoJSON(regions, {
           style: regionStyle
         }).addTo(map);
-        
+
         themeLayer = L.geoJSON(mapdata, {
           style: themeStyle,
           onEachFeature: onEachThemeFeature
