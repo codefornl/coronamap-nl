@@ -48,17 +48,25 @@ var labelLayer = L.layerGroup();
 var regionsLayer;
 var themeLayer;
 var interval;
+var isPlaying = false;
 
 function playClick() {
-    var dateSelect = $('#datum-select');
     clearInterval(interval);
+    if(isPlaying) {
+        isPlaying = false;
+        return;
+    }
+
+    var dateSelect = $('#datum-select');
     startClick();
 
+    isPlaying = true;
     interval = setInterval(function () {
         var currentIndex = window.files.indexOf(dateSelect.val());
         if ( canGoNext(currentIndex) ) {
             nextClick();
         } else {
+            isPlaying = false;
             clearInterval(interval);
         }
     }, 1500);
@@ -197,6 +205,11 @@ function addTheme(map) {
             mouseout: resetHighlight,
             click: zoomToFeature
         });
+
+        if(!feature.properties) {
+            return
+        }
+
         var aantal = feature.properties.Aantal;
         if ( aantal > 0 ) {
             L.marker(layer.getBounds().getCenter(), {
@@ -219,6 +232,10 @@ function addTheme(map) {
     }
 
     function themeStyle(e) {
+        if(!e.properties) {
+            return
+        }
+
         var value = e.properties.Aantal;
         var data = {
             weight: 1,
