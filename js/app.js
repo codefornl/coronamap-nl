@@ -210,8 +210,8 @@ function addTheme(map) {
 
     function regionStyle() {
         var data = {
-            weight: 2,
-            opacity: 1,
+            weight: 1,
+            opacity: 0.5,
             color: '#f00',
             fillOpacity: 0
         };
