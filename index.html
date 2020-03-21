@@ -5,6 +5,7 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
@@ -13,35 +14,48 @@
 </head>
 
 <body>
-    <div id="controls">
-        <style>
-            #controls {
-                position: absolute;
-                width: 200px;
-                height: 200px;
-                background: white;
-                z-index: 1001;
-                margin: 10px;
-                padding: 10px;
-                font-family: Arial;
-                opacity: 0.9;
-            }
-        </style>
-        <select id="datum-select">
-        </select>
-        <br>
-        <button id="previous">Previous</button>
-        <button id="next" disabled>Next</button>
-        <br>
-        <br>
-        <button id="play">Play</button>
-        <br>
-        <br>
-        <button id="start">Go to first day</button>
-        <div id="info"></div>
-        <div>
-            <a href="https://github.com/codefornl/coronamap-nl"
-                style="font-size: 10px">https://github.com/codefornl/coronamap-nl</a>
+    <div id="controls" class="card">
+        <div class="card-content">
+            <div class="field has-addons">
+                <p class="control">
+                    <button id="start" class="button">
+                        <span class="icon is-small">
+                            <i class="fas fa-fast-backward"></i>
+                        </span>
+                    </button>
+                </p>
+                <p class="control">
+                    <button id="play" class="button">
+                        <span class="icon is-small">
+                            <i class="far fa-caret-square-right"></i>
+                        </span>
+                    </button>
+                </p>
+                <p class="control">
+                    <button id="previous" class="button">
+                        <span class="icon is-small">
+                            <i class="fas fa-caret-left"></i>
+                        </span>
+                    </button>
+                </p>
+                <p class="select">
+                    <select id="datum-select">
+                    </select>
+                </p>
+                <p class="control">
+                    <button id="next" class="button">
+                        <span class="icon is-small">
+                            <i class="fas fa-caret-right"></i>
+                        </span>
+                    </button>
+                </p>
+
+            </div>
+            <div id="info"></div>
+            <div>
+                <a href="https://github.com/codefornl/coronamap-nl"
+                    style="font-size: 10px">https://github.com/codefornl/coronamap-nl</a>
+            </div>
         </div>
     </div>
 
@@ -49,6 +63,7 @@
 
     <!-- Script References (Leaflet, JQuery, etc) -->
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
