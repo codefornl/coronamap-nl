@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MunicipalityDataService } from '../../core/municipality-data.service';
 
 @Component({
   selector: 'app-home-page',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: [ './home-page.component.scss' ]
 })
 export class HomePageComponent {
-  constructor() {
+  constructor(
+    public municipalityDataService: MunicipalityDataService
+  ) {
   }
 }
