@@ -1,0 +1,44 @@
+
+:host {
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    min-height: 26px;
+    min-width: 26px;
+    background: white;
+    z-index: 1000;
+    border-radius: 5px;
+
+    fa-icon {
+      height: 18px;
+      width: 18px;
+      margin: auto;
+    }
+  }
+
+  .options {
+    position: absolute;
+    left: 56px;
+    bottom: 20px;
+    z-index: 1000;
+    border-radius: 5px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    background: white;
+
+    h3 {
+      margin-top: 0;
+    }
+
+    mat-button-toggle-group {
+      margin-right: auto;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
+import { Subject } from 'rxjs';
 
 interface IFile {
   fileName: string;
@@ -10,9 +11,11 @@ interface IFile {
 @Injectable()
 export class MunicipalityDataService {
   public files: IFile[];
-  public selectedFile: IFile;
+  public selectedFileKey: string = '';
+  public selectedFileKey$: Subject<string> = new Subject();
   public cache = {};
   private filesUrl = 'https://kapulara.github.io/COVID-19-NL/Municipalities/json/files.json';
+  public isLoading: boolean = false;
 
   constructor(
     private httpClient: HttpClient
@@ -21,7 +24,9 @@ export class MunicipalityDataService {
   }
 
   public async getFiles(): Promise<IFile[]> {
+    this.isLoading = false;
     const fileResult: string[] = (await this.httpClient.get(this.filesUrl).toPromise()) as string[];
+    this.isLoading = true;
 
     this.files = fileResult.map((fileName) => ({
       fileName,
@@ -32,16 +37,43 @@ export class MunicipalityDataService {
   }
 
   public async getFileByKey(key): Promise<any> {
+    if ( !_.isNil(this.cache[ key ]) ) {
+      return this.cache[ key ];
+    }
+
+    this.isLoading = true;
     const result = await this.httpClient.get(this.fileUrl(key))
       .toPromise();
+    this.isLoading = false;
 
-    this.cache[key] = this.toCache(result as any);
+    this.cache[ key ] = this.toCache(result as any);
 
     return result;
   }
 
   public async selectLastOne() {
-    this.selectedFile = this.files[ this.files.length - 1 ];
+    this.select(this.files[ this.files.length - 1 ].key);
+  }
+
+  public onChange($event: Event) {
+    console.log($event);
+  }
+
+  public select(key: any) {
+    this.selectedFileKey = key;
+    this.selectedFileKey$.next(this.selectedFileKey);
+  }
+
+  public async preload() {
+    for (let index = 0; index < this.files.length; index++) {
+      const file = this.files[ index ];
+
+      if ( !_.isNil(this.cache[ file.key ]) ) {
+        continue;
+      }
+
+      await this.getFileByKey(file.key);
+    }
   }
 
   private fileUrl = (key) => `https://kapulara.github.io/COVID-19-NL/Municipalities/json/${key}-latest.json`;
