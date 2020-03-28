@@ -1,12 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FeatureCollection, GeoJSON } from 'geojson';
-import * as _ from 'lodash';
+import { FeatureCollection } from 'geojson';
 
-interface IFile {
-  fileName: string;
-  key: string;
-}
 
 @Injectable()
 export class GeoDataService {
