@@ -21,6 +21,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { MapOptionsComponent } from './pages/home-page/map-options/map-options.component';
 import { MapComponent } from './pages/home-page/map/map.component';
 import { MapButtonsComponent } from './pages/home-page/map-buttons/map-buttons.component';
+import { MapInfoComponent } from './pages/home-page/map-info/map-info.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { MapButtonsComponent } from './pages/home-page/map-buttons/map-buttons.c
     HomePageComponent,
     MapOptionsComponent,
     MapComponent,
-    MapButtonsComponent
+    MapButtonsComponent,
+    MapInfoComponent
   ],
   providers: [
     MunicipalityDataService,

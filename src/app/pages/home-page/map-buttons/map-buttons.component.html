@@ -1,16 +1,16 @@
-<div class="buttons buttons--padding">
+<div class="buttons buttons--padding-without-bottom">
   <mat-form-field id="files">
-    <mat-label>Dates</mat-label>
+    <mat-label>Day</mat-label>
     <select (ngModelChange)="municipalityDataService.select($event)" [ngModel]="municipalityDataService.selectedFileKey"
             matNativeControl
             required>
       <option disabled value="">Select day...</option>
-      <option *ngFor="let file of municipalityDataService.files"
+      <option *ngFor="let file of municipalityDataService.files; let i = index"
               [attr.id]="file.key"
               [ngClass]="{ 'card--selected': municipalityDataService?.selectedFileKey === file?.key }"
               [value]="file.key"
               class="card">
-        {{ file.key }}
+        {{ file.key }} (Day: {{ i + 1 }})
       </option>
     </select>
   </mat-form-field>

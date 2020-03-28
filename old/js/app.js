@@ -23,7 +23,7 @@ $(document).ready(function () {
             }
             index++;
         }
-        console.log(files);
+        //console.log(files);
 
         window.map = map;
         $('#datum-select').change(onChange);
@@ -91,7 +91,7 @@ function updateButtons() {
     var dateSelect = $('#datum-select');
     var currentIndex = window.files.indexOf(dateSelect.val());
 
-    console.log((currentIndex - 1) > 0, (currentIndex - 1));
+    //console.log((currentIndex - 1) > 0, (currentIndex - 1));
     $('#previous').prop('disabled', !canGoPrevious(currentIndex));
     $('#next').prop('disabled', !canGoNext(currentIndex));
 }
@@ -250,9 +250,23 @@ function addTheme(map) {
         return data;
     }
 
-    $.getJSON('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
-        $.getJSON('./data/veiligheidsregios_simplified.geojson', function (regions) {
-            $.getJSON('https://kapulara.github.io/COVID-19-NL/Municipalities/json/' + $('#datum-select').val() + '-latest.json', function (selectedData) {
+    function tryFromCache(url, func) {
+      if (!window.cache) window.cache = {};
+      if (!window.cache[url]) {
+        $.getJSON(url, function (data) {
+          window.cache[url] = data;
+          func(JSON.parse(JSON.stringify(data)));
+        });
+      } else {
+        var data = window.cache[url];
+        func(JSON.parse(JSON.stringify(data)));
+      }
+    }
+
+    tryFromCache('./data/gemeentegrenzen_simplified.geojson', function (mapdata) {
+
+        tryFromCache('./data/veiligheidsregios_simplified.geojson', function (regions) {
+            tryFromCache('https://kapulara.github.io/COVID-19-NL/Municipalities/json/' + $('#datum-select').val() + '-latest.json', function (selectedData) {
                 let mappedData = {};
                 $(selectedData).each(function (i, data) {
                     mappedData[ data[ 'Gemnr' ] ] = data;

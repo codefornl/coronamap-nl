@@ -1,0 +1,25 @@
+
+:host {
+  position: absolute;
+  z-index: 1000;
+  right: 10px;
+  bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+  overflow-x: hidden;
+
+  a {
+    margin-right: 10px;
+  }
+
+  .buttons {
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 10px;
+  }
+}
+

@@ -43,7 +43,7 @@ export class MapButtonsService {
       } else {
         this.stop();
       }
-    }, 500);
+    }, 1000);
   }
 
   public pause() {

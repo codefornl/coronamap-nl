@@ -1,6 +1,15 @@
-<div class="map"
-     leaflet
-     [leafletOptions]="options"
+<div *ngIf="shouldShowWarning()" class="info-panel">
+  <fa-icon [icon]="warningSign" class="warning-icon"></fa-icon>
+  <p>Testing policy has been changed on the <a href="https://lci.rivm.nl/richtlijnen/covid-19#maatregelen">13th of
+    March</a>.<br>
+    This has an affect on the number of reported cases in the Netherlands.<br>
+    You can find the criteria to get tested in the Netherlands <a
+      href="https://lci.rivm.nl/richtlijnen/covid-19#diagnostiek">here.</a></p>
+  <fa-icon [icon]="crossIcon" class="cross-icon" (click)="closeWarning()"></fa-icon>
+</div>
+<div (leafletMapReady)="onMapReady($event)"
      [leafletLayers]="layers"
-     (leafletMapReady)="onMapReady($event)">
+     [leafletOptions]="options"
+     class="map"
+     leaflet>
 </div>
