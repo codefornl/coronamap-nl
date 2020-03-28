@@ -1,0 +1,51 @@
+
+:host {
+  position: absolute;
+  z-index: 1000;
+  left: 20px;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+  overflow-x: hidden;
+
+  a {
+    margin-right: 10px;
+  }
+
+  .buttons {
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .divider {
+      margin-right: 20px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--padding-without-bottom {
+      padding: 1.25em;
+      padding-bottom: 0;
+    }
+
+    &--padding {
+      padding: 1.25em;
+    }
+
+    &--info {
+      margin-top: 20px;
+    }
+  }
+}
+

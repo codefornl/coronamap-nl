@@ -1,0 +1,17 @@
+
+:host {
+  flex: 1;
+  display: flex;
+  position: relative;
+
+  .loader {
+    position: absolute;
+    left: calc(50% - 25px);
+    top: calc(50% - 25px);
+    z-index: 1500;
+
+    ::ng-deep circle {
+      stroke: #ffffff;
+    }
+  }
+}
