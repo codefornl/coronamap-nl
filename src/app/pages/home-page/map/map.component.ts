@@ -42,7 +42,8 @@ export class MapComponent implements OnInit, OnDestroy {
         'https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token=' + this.mapboxToken, {
           tileSize: 512,
           zoomOffset: -1,
-          attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> ' +
+            '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         })
     ],
     zoom: 8,
@@ -102,6 +103,10 @@ export class MapComponent implements OnInit, OnDestroy {
     const day = moment(this.activeKey());
 
     return day.isValid() && day.isSameOrAfter('03-13-2020', 'day') && !this.showWarningOverride;
+  }
+
+  public closeWarning() {
+    this.showWarningOverride = true;
   }
 
   private hasLabels = () => this.mapOptionsService.hasLabels === 'on';
@@ -197,15 +202,15 @@ export class MapComponent implements OnInit, OnDestroy {
     layer: Layer
   ) {
     layer.on({
-      mouseover: (feature) => this.highlightFeature(feature),
-      mouseout: (feature) => this.resetHighlight(feature)
+      mouseover: (mouseOverFeature) => this.highlightFeature(mouseOverFeature),
+      mouseout: (mouseOutFeature) => this.resetHighlight(mouseOutFeature)
     });
 
     if ( !feature.properties || !this.hasLabels() ) {
       return;
     }
 
-    var aantal = feature.properties.Aantal;
+    const aantal = feature.properties.Aantal;
     if ( aantal > 0 ) {
       marker((layer as any).getBounds().getCenter(), {
         icon: divIcon({
@@ -214,9 +219,5 @@ export class MapComponent implements OnInit, OnDestroy {
         })
       }).addTo(this.labelLayer);
     }
-  }
-
-  public closeWarning() {
-    this.showWarningOverride = true;
   }
 }

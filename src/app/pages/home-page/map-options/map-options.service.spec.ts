@@ -6,7 +6,7 @@ describe('MapOptionsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MapOptionsService = TestBed.get(MapOptionsService);
+    const service: MapOptionsService = TestBed.inject(MapOptionsService);
     expect(service).toBeTruthy();
   });
 });

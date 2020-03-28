@@ -4,8 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prod-test": "yarn build:local && http-server dist/coronamap-nl",
     "build": "ng build",
-    "build:ci": "ng build --prod --base-href=\"/coronamap-nl/\"",
+    "build:ci": "ng build --prod --aot --base-href=\"/coronamap-nl/\"",
+    "build:local": "ng build --prod --aot --base-href=\"/\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -21,15 +21,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Yarn install
+      - name: Install
         uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install # will run `yarn install` command
 
-      - name: Yarn build
+      - name: Build
         uses: borales/actions-yarn@v2.0.0
         with:
           cmd: build:ci # will run `yarn build:ci` command
+
+      - name: Lint
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: lint # will run `yarn lint` command
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
