@@ -1,0 +1,50 @@
+<div class="buttons buttons--padding">
+  <mat-form-field id="files">
+    <mat-label>Dates</mat-label>
+    <select (ngModelChange)="municipalityDataService.select($event)" [ngModel]="municipalityDataService.selectedFileKey"
+            matNativeControl
+            required>
+      <option disabled value="">Select day...</option>
+      <option *ngFor="let file of municipalityDataService.files"
+              [attr.id]="file.key"
+              [ngClass]="{ 'card--selected': municipalityDataService?.selectedFileKey === file?.key }"
+              [value]="file.key"
+              class="card">
+        {{ file.key }}
+      </option>
+    </select>
+  </mat-form-field>
+</div>
+<div class="buttons">
+  <button (click)="mapButtonsService.previous()"
+          [disabled]="!mapButtonsService.canGoPrevious || mapButtonsService.isRunning"
+          mat-icon-button>
+    <mat-icon>keyboard_arrow_left_outline</mat-icon>
+  </button>
+  <button (click)="mapButtonsService.next()"
+          [disabled]="!mapButtonsService.canGoNext || mapButtonsService.isRunning"
+          class="divider"
+          mat-icon-button>
+    <mat-icon>keyboard_arrow_right_outline</mat-icon>
+  </button>
+  <button (click)="mapButtonsService.start()"
+          [disabled]="!mapButtonsService.canGoToStart || mapButtonsService.isRunning"
+          mat-icon-button>
+    <mat-icon>skip_previous_outline</mat-icon>
+  </button>
+  <button (click)="mapButtonsService.stop()"
+          [disabled]="!mapButtonsService.canStop"
+          mat-icon-button>
+    <mat-icon>stop_outline</mat-icon>
+  </button>
+  <button (click)="mapButtonsService.pause()"
+          [disabled]="!mapButtonsService.canPause"
+          mat-icon-button>
+    <mat-icon>pause_outline</mat-icon>
+  </button>
+  <button (click)="mapButtonsService.play()"
+          [disabled]="!mapButtonsService.canPlay"
+          mat-icon-button>
+    <mat-icon>play_arrow_outline</mat-icon>
+  </button>
+</div>

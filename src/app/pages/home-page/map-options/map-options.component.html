@@ -1,0 +1,14 @@
+<div class="icon" (click)="visible = !visible">
+  <fa-icon [icon]="faCog"></fa-icon>
+</div>
+<div class="options" *ngIf="visible">
+  <h3>Labels</h3>
+  <mat-button-toggle-group #group="matButtonToggleGroup" [value]="mapOptionsService.hasLabels" (valueChange)="mapOptionsService.setHasLabels($event)">
+    <mat-button-toggle value="off">
+      Off
+    </mat-button-toggle>
+    <mat-button-toggle value="on">
+      On
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

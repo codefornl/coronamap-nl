@@ -1,0 +1,18 @@
+
+:host {
+  flex: 1;
+  display: flex;
+  position: relative;
+
+  .loader {
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    z-index: 1000;
+    transform: translateX(-50%);
+
+    ::ng-deep circle {
+      stroke: #ffffff;
+    }
+  }
+}
