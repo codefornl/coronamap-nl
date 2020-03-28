@@ -1,0 +1,15 @@
+:host {
+  flex: 1;
+  display: flex;
+
+  .map {
+    flex: 1;
+  }
+
+  ::ng-deep .label {
+    font-size: 10px;
+    color: white;
+    pointer-events: none;
+    user-select: none;
+  }
+}
