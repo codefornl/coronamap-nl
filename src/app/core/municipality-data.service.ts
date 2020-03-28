@@ -65,9 +65,7 @@ export class MunicipalityDataService {
   }
 
   public async preload() {
-    for (let index = 0; index < this.files.length; index++) {
-      const file = this.files[ index ];
-
+    for (const file of this.files) {
       if ( !_.isNil(this.cache[ file.key ]) ) {
         continue;
       }
@@ -81,7 +79,7 @@ export class MunicipalityDataService {
   private toCache(items: any[]) {
     const data = {};
 
-    items.forEach((item) => data[ item[ 'Gemnr' ] ] = item);
+    items.forEach((item) => data[ item.Gemnr ] = item);
 
     return data;
   }
