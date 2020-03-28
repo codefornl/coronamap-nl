@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faCross, faExclamationTriangle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Feature, FeatureCollection } from 'geojson';
 import {
   Browser,
@@ -19,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { GeoDataService } from '../../../core/geo-data.service';
 import { MunicipalityDataService } from '../../../core/municipality-data.service';
 import { MapOptionsService } from '../map-options/map-options.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-map',
@@ -26,6 +28,8 @@ import { MapOptionsService } from '../map-options/map-options.service';
   styleUrls: [ './map.component.scss' ]
 })
 export class MapComponent implements OnInit, OnDestroy {
+  public warningSign = faExclamationTriangle;
+  public crossIcon = faTimes;
 
   private mapboxToken = 'pk.eyJ1IjoibWlibG9uIiwiYSI6ImNrMGtvajhwaDBsdHQzbm16cGtkcHZlaXUifQ.dJTOE8FJc801TAT0yUhn3g';
   /*
@@ -35,7 +39,7 @@ export class MapComponent implements OnInit, OnDestroy {
   public options = {
     layers: [
       tileLayer(
-        'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=' + this.mapboxToken, {
+        'https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token=' + this.mapboxToken, {
           tileSize: 512,
           zoomOffset: -1,
           attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -52,6 +56,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private borders: FeatureCollection;
   private borderLayer: GeoJSON<any>;
   private optionSubscription: Subscription;
+  private showWarningOverride = false;
 
   constructor(
     private municipalityDataService: MunicipalityDataService,
@@ -91,6 +96,12 @@ export class MapComponent implements OnInit, OnDestroy {
     if ( !Browser.ie && !Browser.opera && !Browser.edge ) {
       layer.bringToFront();
     }
+  }
+
+  public shouldShowWarning() {
+    const day = moment(this.activeKey());
+
+    return day.isValid() && day.isSameOrAfter('03-13-2020', 'day') && !this.showWarningOverride;
   }
 
   private hasLabels = () => this.mapOptionsService.hasLabels === 'on';
@@ -205,4 +216,7 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
+  public closeWarning() {
+    this.showWarningOverride = true;
+  }
 }

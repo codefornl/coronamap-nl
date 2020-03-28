@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MapOptionsService {
-  public hasLabels: string = 'off';
+  public hasLabels: string = 'on';
   public options$: Subject<boolean> = new Subject<boolean>();
 
   public setHasLabels($event: any) {

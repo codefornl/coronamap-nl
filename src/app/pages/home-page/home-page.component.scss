@@ -6,10 +6,9 @@
 
   .loader {
     position: absolute;
-    left: 50%;
-    top: 20px;
-    z-index: 1000;
-    transform: translateX(-50%);
+    left: calc(50% - 25px);
+    top: calc(50% - 25px);
+    z-index: 1500;
 
     ::ng-deep circle {
       stroke: #ffffff;
